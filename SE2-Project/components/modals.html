@@ -1,0 +1,117 @@
+<div id="member-panel-backdrop" class="fixed inset-0 bg-surface-container-lowest/60 z-40 hidden" onclick="closeMemberPanel()"></div>
+<div id="member-panel" class="fixed top-0 right-0 h-full w-full md:w-[800px] bg-surface-container-low z-50 flex flex-col border-l border-outline-variant/15 shadow-2xl slide-panel">
+  <div class="flex justify-between items-center px-8 h-20 border-b border-outline-variant/10">
+    <h2 class="font-headline text-xl font-bold tracking-tight">Member Profile: <span id="panel-name" class="text-primary">—</span></h2>
+    <button onclick="closeMemberPanel()" class="w-10 h-10 flex items-center justify-center hover:bg-surface-bright transition-colors cursor-pointer group">
+      <span class="material-symbols-outlined text-on-surface-variant group-hover:text-white">close</span>
+    </button>
+  </div>
+  <div class="flex-1 overflow-y-auto hide-scrollbar p-8">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-12">
+      <div class="md:col-span-5 flex flex-col gap-8">
+        <div class="relative aspect-square bg-surface-container-highest overflow-hidden border border-outline-variant/30">
+          <img id="panel-img" class="w-full h-full object-cover" src="" alt=""/>
+        </div>
+        <div class="grid gap-3">
+          <button onclick="handleMentorRequest()" class="bg-primary text-[#0d6100] font-bold py-4 text-xs tracking-widest uppercase hover:brightness-110 transition-all neon-glow-primary">Mentor Request</button>
+        </div>
+        <div class="bg-surface-container p-6 border-l-2 border-primary/40 space-y-4">
+          <h4 class="text-[10px] font-mono text-primary uppercase tracking-[0.2em] mb-4">Tactical Data</h4>
+          <div id="panel-contact" class="space-y-3"></div>
+        </div>
+      </div>
+      <div class="md:col-span-7 flex flex-col gap-10">
+        <div>
+          <h3 class="font-headline text-3xl font-bold mb-8">Experience</h3>
+          <div id="panel-experience" class="space-y-8"></div>
+        </div>
+        <div class="bg-surface-container-lowest p-6 border border-outline-variant/10">
+          <div id="panel-bio" class="font-mono text-[11px] leading-relaxed text-on-surface-variant"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="login-modal" class="modal-backdrop" onclick="handleBackdropClick(event, 'login-modal')">
+  <div class="max-w-md w-full bg-[#131313] border border-outline-variant/30 p-10 relative shadow-2xl" onclick="event.stopPropagation()">
+    <button onclick="closeModal('login-modal')" class="absolute top-4 right-4 text-on-surface-variant hover:text-white transition-colors">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+
+    <header class="mb-8">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="w-2 h-2 bg-primary"></span>
+        <span class="font-mono text-[10px] uppercase tracking-widest text-primary">SECURE_HANDSHAKE.EXE</span>
+      </div>
+      <h2 class="font-headline text-3xl font-bold tracking-tight uppercase text-white">Initialize Access</h2>
+      <div class="mt-4 inline-flex items-center gap-2 px-3 py-1.5 bg-[#1a1a1a] border border-outline-variant/20">
+        <span class="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest">LOC: 127.0.0.1</span>
+      </div>
+    </header>
+
+    <div class="space-y-6">
+      <div class="space-y-2">
+        <label class="text-[10px] font-headline font-bold uppercase tracking-[0.2em] text-on-surface-variant block">Identity Identifier</label>
+        <input type="text" class="w-full bg-white text-black px-4 py-3 font-mono text-sm border-none outline-none placeholder:text-gray-500 focus:ring-2 focus:ring-primary" placeholder="username_or_email" id="login-user"/>
+      </div>
+
+      <div class="space-y-2">
+        <label class="text-[10px] font-headline font-bold uppercase tracking-[0.2em] text-on-surface-variant block">Pass-Key</label>
+        <input type="password" class="w-full bg-white text-black px-4 py-3 font-mono text-sm border-none outline-none placeholder:text-gray-500 focus:ring-2 focus:ring-primary" placeholder="••••••••" id="login-pass"/>
+      </div>
+
+      <div class="flex items-center justify-between gap-4 pt-1 text-[10px] font-bold uppercase tracking-widest">
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="keep-persistent" class="w-4 h-4 bg-transparent border-outline-variant text-primary focus:ring-primary focus:ring-offset-0"/>
+          <label for="keep-persistent" class="text-on-surface-variant">Keep Persistent</label>
+        </div>
+        <a href="#" class="text-on-surface-variant hover:text-white transition-colors">Recovery Protocol?</a>
+      </div>
+
+      <button onclick="doLogin()" class="w-full bg-[#D4AF37] hover:bg-[#e8c84a] text-black font-headline font-black uppercase tracking-widest py-4 text-sm transition-all flex items-center justify-center gap-3 mt-2">
+        Execute Login <span class="material-symbols-outlined text-lg">login</span>
+      </button>
+
+      <div class="relative flex py-2 items-center">
+        <div class="flex-grow border-t border-outline-variant/20"></div>
+        <span class="flex-shrink mx-4 font-mono text-[10px] text-on-surface-variant/40 uppercase tracking-widest">ALT_NODES</span>
+        <div class="flex-grow border-t border-outline-variant/20"></div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <button class="flex items-center justify-center gap-2 py-3 bg-[#0e0e0e] border border-outline-variant/30 hover:bg-surface-bright text-xs font-headline font-bold text-white transition-colors">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" class="w-4 h-4"/>
+          Google
+        </button>
+        <button class="flex items-center justify-center gap-2 py-3 bg-[#0e0e0e] border border-outline-variant/30 hover:bg-surface-bright text-xs font-headline font-bold text-white transition-colors">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Logo.svg" alt="GitHub" class="w-4 h-4 invert"/>
+          GitHub
+        </button>
+      </div>
+
+      <div class="text-center pt-2 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+        Don't have an account? <a href="#" class="text-primary hover:brightness-110 ml-1">Sign Up</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="article-modal" class="modal-backdrop" onclick="handleBackdropClick(event, 'article-modal')">
+  <div class="max-w-2xl w-full bg-surface-container-low border border-outline-variant/15 p-10 relative overflow-hidden" onclick="event.stopPropagation()">
+    <button onclick="closeModal('article-modal')" class="absolute top-4 right-4 text-on-surface-variant hover:text-white transition-colors">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+    <div class="mb-6">
+      <span class="w-2 h-2 bg-primary inline-block mr-2 animate-pulse"></span>
+      <span class="font-mono text-[10px] uppercase tracking-widest text-primary">Decrypted_Briefing.txt</span>
+    </div>
+    <h2 id="article-title" class="font-headline text-3xl font-bold mb-6 text-white"></h2>
+    <div id="article-content" class="text-on-surface-variant text-sm leading-relaxed space-y-4 font-mono hide-scrollbar overflow-y-auto max-h-[60vh]"></div>
+  </div>
+</div>
+
+<div id="toast" class="glass-panel border border-primary/20 px-6 py-4 flex items-center gap-4">
+  <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+  <span id="toast-text" class="text-sm font-mono text-on-surface"></span>
+</div>
